@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../partials/config.php';
 require_once __DIR__ . '/../partials/connect.php';
+require_once __DIR__ . '/../views/items/add.php';
+require_once __DIR__ . '/../views/items/index.php';
+require_once __DIR__ . '/../views/sellers/add.php';
+require_once __DIR__ . '/../views/sellers/index.php';
 
 class Router {
   public function start() {
@@ -12,7 +16,7 @@ class Router {
     $methodName = isset($url[2]) ? $url[2] : 'index';
 
     // Inkludera kontrollerklassen
-    $controllerFile = '../app/controllers/' . $controllerName . '.php';
+    $controllerFile = __DIR__ . '/../controllers/' . $controllerName . '.php';
     if (file_exists($controllerFile)) {
       require_once $controllerFile;
       // Skapa en instans av kontrollern
@@ -27,7 +31,7 @@ class Router {
       }
     } else {
       // Felhantering om kontrollerklassen inte finns
-      echo '404 - Sidan hittades inte';
+      echo '404 - controller hittades inte';
     }
 }
 }
