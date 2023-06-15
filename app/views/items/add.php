@@ -12,9 +12,16 @@
     <label for="sellerId">Seller ID:</label>
     <input type="number" name="sellerId" id="sellerId" required><br>
 
-    <!-- Add more input fields for other item attributes such as color, brand, etc. -->
+    <label for="color">Color:</label>
+    <input type="text" name="color" id="color" required><br>
+
+    <label for="brand">Brand:</label>
+    <input type="text" name="brand" id="brand" required><br>
+
+    <!-- Add more input fields for other item attributes -->
 
     <button type="submit">Add Item</button>
   </form>
 </body>
 </html>
+

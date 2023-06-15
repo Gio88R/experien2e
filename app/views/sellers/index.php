@@ -10,20 +10,24 @@
       <tr>
         <th>ID</th>
         <th>Namn</th>
-        <th>Efternamn</th>
-        <!-- Lägg till fler kolumnrubriker efter behov -->
+        <th>Email</th>
       </tr>
     </thead>
     <tbody>
       <!-- Loopa igenom säljare och visa i tabellen -->
-      <?php foreach ($sellers as $seller): ?>
+      <?php if (isset($sellers) && !empty($sellers)): ?>
+        <?php foreach ($sellers as $seller): ?>
+          <tr>
+            <td><?php echo $seller->getSellerId(); ?></td>
+            <td><?php echo $seller->getName(); ?></td>
+            <td><?php echo $seller->getEmail(); ?></td>
+          </tr>
+        <?php endforeach; ?>
+      <?php else: ?>
         <tr>
-          <td><?php echo $seller->getId(); ?></td>
-          <td><?php echo $seller->name; ?></td>
-          <td><?php echo $seller->lastname; ?></td>
-          <!-- Visa fler kolumndata efter behov -->
+          <td colspan="3">Inga säljare tillgängliga.</td>
         </tr>
-      <?php endforeach; ?>
+      <?php endif; ?>
     </tbody>
   </table>
 </body>

@@ -22,4 +22,4 @@ function connect($host, $db, $user, $password)
   }
 }
 
-return connect($host, $db, $user, $password);
+$pdo = connect($host, $db, $user, $password);

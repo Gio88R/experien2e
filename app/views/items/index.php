@@ -18,16 +18,22 @@
     </thead>
     <tbody>
       <!-- Loopa igenom plagg och visa i tabellen -->
-      <?php foreach ($items as $item): ?>
+      <?php if (isset($items) && !empty($items)): ?>
+        <?php foreach ($items as $item): ?>
+          <tr>
+            <td><?php echo $item->getItemId(); ?></td>
+            <td><?php echo $item->getName(); ?></td>
+            <td><?php echo $item->getColor(); ?></td>
+            <td><?php echo $item->getBrand(); ?></td>
+            <td><?php echo $item->getSellerId(); ?></td>
+            <td><?php echo ($item->isSold() ? 'Ja' : 'Nej'); ?></td>
+          </tr>
+        <?php endforeach; ?>
+      <?php else: ?>
         <tr>
-          <td><?php echo $item->getItemId(); ?></td>
-          <td><?php echo $item->getName(); ?></td>
-          <td><?php echo $item->getColor(); ?></td>
-          <td><?php echo $item->getBrand(); ?></td>
-          <td><?php echo $item->getSellerId(); ?></td>
-          <td><?php echo ($item->isSold() ? 'Ja' : 'Nej'); ?></td>
+          <td colspan="6">Inga plagg tillgängliga.</td>
         </tr>
-      <?php endforeach; ?>
+      <?php endif; ?>
     </tbody>
   </table>
 </body>

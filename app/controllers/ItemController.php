@@ -1,5 +1,15 @@
 <?php
+require_once __DIR__ . '/../partials/connect.php';
+require_once __DIR__ . '/../models/Item.php';
+
 class ItemController {
+  private $db;
+
+  public function __construct() {
+    global $pdo;
+    $this->db = $pdo;
+  }
+
   public function index() {
     // Hämta och visa en lista med plagg
     $itemModel = new ItemModel();
@@ -43,6 +53,7 @@ class ItemController {
       require_once 'app/views/items/index.php';
     }
   }
+
   public function markSold($itemId) {
     // Hantera logiken för att markera ett plagg som sålt
     try {

@@ -7,6 +7,7 @@ class Item {
   private $brand;
   private $sellerId;
   private $sold;
+  private $db;
 
   public function __construct($itemId, $name, $color, $brand, $sellerId, $sold) {
     $this->itemId = $itemId;

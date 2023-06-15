@@ -47,7 +47,14 @@ class SellerModel {
     $query = "SELECT * FROM sellers";
     $stmt = $this->db->prepare($query);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  
+    $sellers = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $seller = new Seller($row['id'], $row['name'], $row['lastname'], $row['email'], $row['mobile']);
+      $sellers[] = $seller;
+    }
+  
+    return $sellers;
   }
   public function validateEmail($email) {
     // Validera e-postadress med filter_var
