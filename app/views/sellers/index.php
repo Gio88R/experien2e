@@ -1,3 +1,11 @@
+<?php
+require_once __DIR__ . '/../../models/Seller.php';
+require_once __DIR__ . '/../../partials/connect.php';
+
+$sellerModel = new SellerModel();
+$sellers = $sellerModel->getAllSellers();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +26,7 @@
       <?php if (isset($sellers) && !empty($sellers)): ?>
         <?php foreach ($sellers as $seller): ?>
           <tr>
-            <td><?php echo $seller->getSellerId(); ?></td>
+            <td><?php echo $seller->getId(); ?></td>
             <td><?php echo $seller->getName(); ?></td>
             <td><?php echo $seller->getEmail(); ?></td>
           </tr>

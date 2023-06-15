@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../partials/connect.php';
 
 class Seller {
     private $id;
@@ -40,8 +41,11 @@ class SellerModel {
   private $db;
 
   public function __construct() {
+    global $host, $db, $user, $password;
+    require_once __DIR__ . '/../partials/connect.php';
     $this->db = connect($host, $db, $user, $password);
-  }
+}
+  
 
   public function getAllSellers() {
     $query = "SELECT * FROM sellers";

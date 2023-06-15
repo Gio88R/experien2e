@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__ . '/../../models/Item.php';
+require_once __DIR__ . '/../../partials/connect.php';
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>

@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../partials/connect.php';
+require_once __DIR__ . '/../models/Seller.php';
+
 class SellerController {
   public function index() {
     // Hämta och visa en lista med säljare

@@ -1,25 +1,18 @@
 <?php
+require_once __DIR__ . '/../partials/connect.php';
 
 class Item {
-  private $itemId;
-  private $name;
-  private $color;
-  private $brand;
-  private $sellerId;
-  private $sold;
   private $db;
 
-  public function __construct($itemId, $name, $color, $brand, $sellerId, $sold) {
-    $this->itemId = $itemId;
-    $this->name = $name;
-    $this->color = $color;
-    $this->brand = $brand;
-    $this->sellerId = $sellerId;
-    $this->sold = $sold;
+  public function __construct() {
+    global $host, $db, $user, $password;
+    $this->db = connect($host, $db, $user, $password);
+  }
 
-    // Anslut till databasen
-    $this->db = new PDO("mysql:host=localhost;dbname=experien2e", "experien2e", "abc123");
-    $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  public function getAllItems() {
+    $query = "SELECT * FROM Item";
+    $stmt = $this->db->query($query);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function addItem($name, $color, $brand, $sellerId) {
@@ -50,34 +43,5 @@ class Item {
 
   public function isSold() {
     return $this->sold;
-  }
-
-  public function getDaysInInventory() {
-    $query = "SELECT createdDate FROM Item WHERE itemId = ?";
-  $stmt = $this->db->prepare($query);
-  $stmt->execute([$this->itemId]);
-  $createdDate = $stmt->fetchColumn();
-
-  $currentDate = date('Y-m-d'); // Aktuellt datum
-
-  $datetime1 = new DateTime($createdDate);
-  $datetime2 = new DateTime($currentDate);
-  $interval = $datetime1->diff($datetime2);
-
-  return $interval->days;
-  }
-
-  public function markAsSold() {
-    $query = "UPDATE Item SET sold = 1 WHERE itemId = ?";
-    $stmt = $this->db->prepare($query);
-    $stmt->execute([$this->itemId]);
-    $this->sold = 1;
-  }
-
-  public function getItemInfo() {
-    $query = "SELECT * FROM Item WHERE itemId = ?";
-    $stmt = $this->db->prepare($query);
-    $stmt->execute([$this->itemId]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 }

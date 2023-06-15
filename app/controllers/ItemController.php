@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../partials/connect.php';
 require_once __DIR__ . '/../models/Item.php';
-
+  
 class ItemController {
   private $db;
 
@@ -12,11 +12,11 @@ class ItemController {
 
   public function index() {
     // Hämta och visa en lista med plagg
-    $itemModel = new ItemModel();
+    $itemModel = new Item();
     $items = $itemModel->getAllItems();
 
     // Skicka plagglistan till en vyfil
-    require_once 'app/views/items/index.php';
+    require_once __DIR__ . '/../views/items/index.php';
   }
 
   public function add() {
@@ -24,33 +24,37 @@ class ItemController {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Formulär skickades - validera och lägg till plagg
       $name = $_POST['name'];
+      $color = $_POST['color'];
+      $brand = $_POST['brand'];
       $sellerId = $_POST['sellerId'];
 
       // Validera och sanera inmatade värden
-      $itemModel = new ItemModel();
+      $itemModel = new Item();
       $isValidName = $itemModel->validateName($name);
+      $isValidColor = $itemModel->validateColor($color);
+      $isValidBrand = $itemModel->validateBrand($brand);
       $isValidSellerId = $itemModel->validateSellerId($sellerId);
-      // ... fortsätt med validering av andra fält
 
-      if ($isValidName && $isValidSellerId) {
+      if ($isValidName && $isValidColor && $isValidBrand && $isValidSellerId) {
         // Sanera inmatade värden
         $sanitizedName = $itemModel->sanitizeInput($name);
+        $sanitizedColor = $itemModel->sanitizeInput($color);
+        $sanitizedBrand = $itemModel->sanitizeInput($brand);
         $sanitizedSellerId = $itemModel->sanitizeInput($sellerId);
-        // ... fortsätt med sanering av andra fält
 
         // Lägg till plagg i databasen
-        $itemModel->addItem($sanitizedName, $sanitizedSellerId);
+        $itemModel->addItem($sanitizedName, $sanitizedColor, $sanitizedBrand, $sanitizedSellerId);
 
         // Om allt gick bra kan du omdirigera till plagglistan eller en bekräftelsesida
         header('Location: /items'); // Exempel på omdirigering till plagglistan
         exit();
       } else {
         // Visa felmeddelanden för ogiltig inmatning
-        require_once 'app/views/items/index.php';
+        require_once __DIR__ . '/../views/items/index.php';
       }
     } else {
       // Visa formuläret för att lägga till ett plagg
-      require_once 'app/views/items/index.php';
+      require_once __DIR__ . '/../views/items/index.php';
     }
   }
 
