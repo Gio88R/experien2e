@@ -10,13 +10,13 @@ class Item {
   }
 
   public function getAllItems() {
-    $query = "SELECT * FROM Item";
+    $query = "SELECT * FROM items";
     $stmt = $this->db->query($query);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
-
+  
   public function addItem($name, $color, $brand, $sellerId) {
-    $query = "INSERT INTO Item (name, color, brand, sellerId, sold) VALUES (?, ?, ?, ?, 0)";
+    $query = "INSERT INTO items (name, color, brand, sellerId, sold) VALUES (?, ?, ?, ?, 0)";
     $stmt = $this->db->prepare($query);
     $stmt->execute([$name, $color, $brand, $sellerId]);
   }

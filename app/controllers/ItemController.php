@@ -12,8 +12,7 @@ class ItemController {
 
   public function index() {
     // Hämta och visa en lista med plagg
-    $itemModel = new Item();
-    $items = $itemModel->getAllItems();
+    $items = $this->getAllItems();
 
     // Skicka plagglistan till en vyfil
     require_once __DIR__ . '/../views/items/index.php';
@@ -72,6 +71,11 @@ class ItemController {
       // Hantera eventuella fel vid uppdateringen av plaggstatusen
       echo 'Error: ' . $e->getMessage();
     }
+  }
+
+  public function getAllItems() {
+    $itemModel = new Item();
+    return $itemModel->getAllItems();
   }
 
   // Implementera övriga metoder som behövs för plagg
