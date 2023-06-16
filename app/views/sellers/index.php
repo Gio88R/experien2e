@@ -17,8 +17,10 @@ $sellers = $sellerModel->getAllSellers();
     <thead>
       <tr>
         <th>ID</th>
-        <th>Namn</th>
+        <th>Name</th>
+        <th>Lastname</th>
         <th>Email</th>
+        <th>Mobile</th>
       </tr>
     </thead>
     <tbody>
@@ -28,7 +30,9 @@ $sellers = $sellerModel->getAllSellers();
           <tr>
             <td><?php echo $seller->getId(); ?></td>
             <td><?php echo $seller->getName(); ?></td>
+            <td><?php echo $seller->getLastname(); ?></td>
             <td><?php echo $seller->getEmail(); ?></td>
+            <td><?php echo $seller->getMobile(); ?></td>
           </tr>
         <?php endforeach; ?>
       <?php else: ?>
