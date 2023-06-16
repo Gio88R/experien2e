@@ -21,7 +21,6 @@ require_once __DIR__ . '/../../controllers/SellerController.php';
     <label for="mobile">Mobile:</label>
     <input type="text" name="mobile" id="mobile" required><br>
 
-    <!-- Add more input fields for other seller attributes such as address, city, etc. -->
 
     <button type="submit">Add Seller</button>
   </form>

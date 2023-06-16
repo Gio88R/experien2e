@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../partials/connect.php';
 require_once __DIR__ . '/../models/Seller.php';
 
 class SellerController {
@@ -9,8 +8,7 @@ class SellerController {
     $sellers = $sellerModel->getAllSellers();
 
     // Skicka säljarlistan till en vyfil
-    // Exempelvis kan du använda require/include för att inkludera en vyfil som visar säljarlistan
-    require_once 'app/views/sellers/index.php';
+    require_once __DIR__ . '/../views/sellers/index.php';
   }
 
   public function add() {
@@ -25,30 +23,24 @@ class SellerController {
       // Validera inmatade värden
       $sellerModel = new SellerModel();
       $isValidEmail = $sellerModel->validateEmail($email);
-      // ... fortsätt med validering av andra fält
 
       if ($isValidEmail) {
-        // Sanera inmatade värden
         $sanitizedName = $sellerModel->sanitizeInput($name);
-        // ... fortsätt med sanering av andra fält
 
         // Lägg till säljaren i databasen
-        $sellerModel->addSeller($sanitizedName, $lastname, $email, $mobile);
+        $sellerModel->addSeller($name, $lastname, $email, $mobile);
 
-        // Om allt gick bra kan du omdirigera till säljarlistan eller en bekräftelsesida
-        header('Location: /sellers'); // Exempel på omdirigering till säljarlistan
+        header('Location: /sellers');
         exit();
       } else {
         // Visa felmeddelanden för ogiltig inmatning
         // Exempelvis kan du använda require/include för att inkludera en vyfil som visar felmeddelanden och formuläret igen
-        require_once 'app/views/sellers/add.php';
+        require_once __DIR__ . '/../views/sellers/add.php';
       }
     } else {
       // Visa formuläret för att lägga till säljare
       // Exempelvis kan du använda require/include för att inkludera en vyfil med formuläret för att lägga till säljare
-      require_once 'app/views/sellers/add.php';
+      require_once __DIR__ . '/../views/sellers/add.php';
     }
   }
-
-  // Implementera övriga metoder som behövs för säljare
 }

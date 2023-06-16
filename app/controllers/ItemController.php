@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../partials/connect.php';
 require_once __DIR__ . '/../models/Item.php';
   
 class ItemController {

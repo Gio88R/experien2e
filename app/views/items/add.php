@@ -21,7 +21,6 @@ require_once __DIR__ . '/../../controllers/ItemController.php';
     <label for="brand">Brand:</label>
     <input type="text" name="brand" id="brand" required><br>
 
-    <!-- Add more input fields for other item attributes -->
 
     <button type="submit">Add Item</button>
   </form>

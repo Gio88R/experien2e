@@ -5,6 +5,11 @@ require_once __DIR__ . '/../views/items/add.php';
 require_once __DIR__ . '/../views/items/index.php';
 require_once __DIR__ . '/../views/sellers/add.php';
 require_once __DIR__ . '/../views/sellers/index.php';
+require_once __DIR__ . '/../models/Item.php';
+require_once __DIR__ . '/../models/Seller.php';
+require_once __DIR__ . '/../controllers/ItemController.php';
+require_once __DIR__ . '/../controllers/SellerController.php';
+
 
 class Router {
   public function start() {

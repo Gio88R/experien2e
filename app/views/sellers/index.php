@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/../../models/Seller.php';
-require_once __DIR__ . '/../../partials/connect.php';
 require_once __DIR__ . '/../../controllers/SellerController.php';
 $sellerModel = new SellerModel();
 $sellers = $sellerModel->getAllSellers();
