@@ -4,6 +4,15 @@ require_once __DIR__ . '/../partials/connect.php';
 class Item {
   private $db;
 
+  public $item_id;
+  public $name;
+  public $color;
+  public $brand;
+  public $sellerId;
+  public $sold;
+  public $created_at;
+  public $updated_at;
+
   public function __construct() {
     global $host, $db, $user, $password;
     $this->db = connect($host, $db, $user, $password);
@@ -16,32 +25,38 @@ class Item {
   }
   
   public function addItem($name, $color, $brand, $sellerId) {
-    $query = "INSERT INTO items (name, color, brand, sellerId, sold) VALUES (?, ?, ?, ?, 0)";
+    $query = "INSERT INTO items (name, color, brand, sellerId, sold, created_at, updated_at) VALUES (?, ?, ?, ?, 0, NOW(), NOW())";
     $stmt = $this->db->prepare($query);
     $stmt->execute([$name, $color, $brand, $sellerId]);
   }
 
-  public function getItemId() {
-    return $this->itemId;
+  public function updateStatus($itemId, $status) {
+    $query = "UPDATE items SET sold = ?, updated_at = NOW() WHERE item_id = ?";
+    $stmt = $this->db->prepare($query);
+    $stmt->execute([$status, $itemId]);
   }
 
-  public function getName() {
-    return $this->name;
+  // Validerings- och saneringsmetoder
+
+  public function validateName($name) {
+    // Implementera valideringslogik för namn
   }
 
-  public function getColor() {
-    return $this->color;
+  public function validateColor($color) {
+    // Implementera valideringslogik för färg
   }
 
-  public function getBrand () {
-    return $this->brand;
+  public function validateBrand($brand) {
+    // Implementera valideringslogik för varumärke
   }
 
-  public function getSellerId() {
-    return $this->sellerId;
+  public function validateSellerId($sellerId) {
+    // Implementera valideringslogik för säljar-ID
   }
 
-  public function isSold() {
-    return $this->sold;
+  public function sanitizeInput($input) {
+    // Implementera saneringslogik för inmatning
   }
+
+  // Övriga metoder för plagghantering
 }

@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/Item.php';
-  
+
 class ItemController {
   private $db;
 
@@ -56,19 +56,18 @@ class ItemController {
     }
   }
 
-  public function markSold($itemId) {
-    // Hantera logiken för att markera ett plagg som sålt
-    try {
-      // Uppdatera plaggstatusen i databasen
-      $query = "UPDATE Item SET sold = 1 WHERE itemId = ?";
-      $stmt = $this->db->prepare($query);
-      $stmt->execute([$itemId]);
+  public function updateStatus() {
+    // Hantera logiken för att uppdatera status för ett plagg
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $itemId = $_POST['itemId'];
+      $status = $_POST['status'];
 
-      // Skicka eventuell respons eller utför andra åtgärder efter uppdateringen
-      // Exempelvis en bekräftelsemeddelande eller omdirigering till en annan sida
-    } catch (PDOException $e) {
-      // Hantera eventuella fel vid uppdateringen av plaggstatusen
-      echo 'Error: ' . $e->getMessage();
+      $itemModel = new Item();
+      $itemModel->updateStatus($itemId, $status);
+
+      // Omdirigera tillbaka till plagglistan
+      header('Location: /items');
+      exit();
     }
   }
 
