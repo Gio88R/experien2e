@@ -26,6 +26,7 @@ class SellerMdl {
                 items.sold_date,
                 sellers.seller_id,
                 sellers.name AS seller_name,
+                sellers.lastname AS seller_lastname,
                 sellers.total_items,
                 sellers.total_items_sold,
                 sellers.total_sales
@@ -39,9 +40,10 @@ class SellerMdl {
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function createSeller($name, $totalItemsSbmt, $totalItemsSold, $totalSalesAmount) {
-        $statement = $this->connect->prepare("INSERT INTO sellers (name, total_items, total_items_sold, total_sales) VALUES (:name, :total_items, :total_items_sold, :total_sales)");
+    public function createSeller($name, $lastname, $totalItemsSbmt, $totalItemsSold, $totalSalesAmount) {
+        $statement = $this->connect->prepare("INSERT INTO sellers (name, lastname, total_items, total_items_sold, total_sales) VALUES (:name, :lastname, :total_items, :total_items_sold, :total_sales)");
         $statement->bindParam(':name', $name);
+        $statement->bindParam(':lastname', $lastname);
         $statement->bindParam(':total_items', $totalItemsSbmt);
         $statement->bindParam(':total_items_sold', $totalItemsSold);
         $statement->bindParam(':total_sales', $totalSalesAmount);

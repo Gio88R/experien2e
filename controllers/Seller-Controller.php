@@ -34,6 +34,7 @@ class SellerCtrl {
             $sellerData = array(
                 "seller_id" => $seller[0]["seller_id"],
                 "seller_name" => $seller[0]["seller_name"],
+                "seller_lastname" => $seller[0]["seller_lastname"],
                 "total_items" => $seller[0]["total_items"],
                 "total_items_sold" => $seller[0]["total_items_sold"],
                 "total_sales" => $seller[0]["total_sales"],
@@ -51,11 +52,12 @@ class SellerCtrl {
         $jsonPayload = file_get_contents('php://input');
         $data = json_decode($jsonPayload, true);
         $name = isset($data['name']) ? filter_var($data['name'], FILTER_SANITIZE_STRING) : '';
+        $lastname = isset($data['lastname']) ? filter_var($data['lastname'], FILTER_SANITIZE_STRING) : '';
         $totalItems = isset($data['total_items']) ? filter_var($data['total_items'], FILTER_SANITIZE_NUMBER_INT) : 0;
         $totalItemsSold = isset($data['total_items_sold']) ? filter_var($data['total_items_sold'], FILTER_SANITIZE_NUMBER_INT) : 0;
         $totalSales = isset($data['total_sales']) ? filter_var($data['total_sales'], FILTER_SANITIZE_NUMBER_INT) : 0;
 
-        $success = $this->model->createSeller($name, $totalItems, $totalItemsSold, $totalSales);
+        $success = $this->model->createSeller($name, $lastname, $totalItems, $totalItemsSold, $totalSales);
         if ($success) {
             $this->view->renderSuccessResponse();
         } else {

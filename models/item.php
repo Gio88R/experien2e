@@ -44,14 +44,16 @@ class ItemMdl  {
         $updateStmt->bindParam(':sellerId', $sellerId);
         $updateStmt->execute();
     }
-    public function insertItem($name, $sellerId, $sbmtDate, $sold, $price) {
-        $statement = $this->connect->prepare("INSERT INTO items (item_name, seller_id, sbmt_date, sold, price) VALUES (:item_name, :seller_id, :sbmt_date, :price, :sold, :price)");
+    public function insertItem($name, $sellerId, $sbmtDate, $price, $sold, $soldDate) {
+        $statement = $this->connect->prepare("INSERT INTO items (item_name, seller_id, sbmt_date, price, sold, sold_date) VALUES (:item_name, :seller_id, :sbmt_date, :price, :sold, :sold_date)");
 
         $statement->bindParam(':item_name', $name);
         $statement->bindParam(':seller_id', $sellerId);
         $statement->bindParam(':sbmt_date', $sbmtDate);
-        $statement->bindParam(':sold', $sold);
         $statement->bindParam(':price', $price);
+        $statement->bindParam(':sold', $sold);
+        $statement->bindParam(':sold_date', $soldDate);
+        
 
         if ($statement->execute()) {
             $updateStmt = $this->connect->prepare("UPDATE sellers SET total_items = total_items + 1 WHERE seller_id = :seller_id");

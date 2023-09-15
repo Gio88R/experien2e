@@ -46,7 +46,7 @@ class ItemCtrl {
             $sellerId = $item['seller_id'];
             $price = $item['price'];
     
-            $this->model->updateSellerStats($sellerId, $price);
+            $this->model->updateSellerSales($sellerId, $price);
     
             $updatedItemResponse = array(
                 'message' => 'Item marked as Sold',
@@ -63,13 +63,14 @@ class ItemCtrl {
             $jsonPayload = file_get_contents('php://input');
             $data = json_decode($jsonPayload, true);
     
-            $name = isset($data['name']) ? filter_var($data['name'], FILTER_SANITIZE_STRING) : '';
+            $name = isset($data['item_name']) ? filter_var($data['item_name'], FILTER_SANITIZE_STRING) : '';
             $sellerId = isset($data['seller_id']) ? filter_var($data['seller_id'], FILTER_SANITIZE_NUMBER_INT) : 0;
             $sbmtDate = $data['sbmt_date'];
-            $sold = isset($data['sold']) ? filter_var($data['sold'], FILTER_SANITIZE_NUMBER_INT) : 0;
             $price = isset($data['price']) ? filter_var($data['price'], FILTER_SANITIZE_NUMBER_INT) : 0;
+            $sold = isset($data['sold']) ? filter_var($data['sold'], FILTER_SANITIZE_NUMBER_INT) : 0;
+            $soldDate = $data['sold_date'];
     
-            $result = $this->model->insertItem($name, $sellerId, $sbmtDate, $sold, $price);
+            $result = $this->model->insertItem($name, $sellerId, $sbmtDate, $price, $sold, $soldDate);
     
             if ($result) {
                 $this->view->renderSuccessResponse();
