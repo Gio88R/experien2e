@@ -28,15 +28,18 @@ SET time_zone = "+00:00";
 --
 DROP TABLE IF EXISTS `items`;
 CREATE TABLE IF NOT EXISTS `items` (
-  `item_id` int(11) NOT NULL, AUTO_INCREMENT
+  `item_id` int(11) NOT NULL AUTO_INCREMENT,
   `item_name` varchar(50) NOT NULL,
   `seller_id` int(11) NOT NULL,
   `sbmt_date` date DEFAULT NULL,
   `price` int(11) NOT NULL,
   `sold` tinyint(4) DEFAULT NULL,
-  `sold_date` date DEFAULT NULL
+  `sold_date` date DEFAULT NULL,
+  PRIMARY KEY (`item_id`),
+  KEY `items_ibfk_1` (`seller_id`)
+  -- CONSTRAINT `items_ibfk1` FOREIGN KEY (`seller_id`) REFERENCES `sellers` (`seller_id`)
   
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumpning av Data i tabell `items`
@@ -56,14 +59,17 @@ INSERT INTO `items` (`item_id`, `item_name`, `seller_id`, `sbmt_date`, `price`, 
 -- Tabellstruktur `sellers`
 --
 
-CREATE TABLE `sellers` (
-  `seller_id` int(11) NOT NULL,
+
+DROP TABLE IF EXISTS `sellers`;
+CREATE TABLE IF NOT EXISTS `sellers`(
+  `seller_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `lastname` varchar(30) NOT NULL,
   `total_items` int(11) NOT NULL,
   `total_items_sold` int(11) NOT NULL,
-  `total_sales` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `total_sales` int(11) NOT NULL,
+  PRIMARY KEY (`seller_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumpning av Data i tabell `sellers`
@@ -82,14 +88,12 @@ INSERT INTO `sellers` (`seller_id`, `name`, `lastname`, `total_items`, `total_it
 -- Index för tabell `items`
 --
 ALTER TABLE `items`
-  ADD PRIMARY KEY (`item_id`) USING BTREE,
-  ADD KEY `seller_id` (`seller_id`);
+  ADD CONSTRAINT `items_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `sellers` (`seller_id`);
+COMMIT;
 
 --
 -- Index för tabell `sellers`
 --
-ALTER TABLE `sellers`
-  ADD PRIMARY KEY (`seller_id`) USING BTREE;
 
 --
 -- AUTO_INCREMENT för dumpade tabeller
@@ -98,14 +102,11 @@ ALTER TABLE `sellers`
 --
 -- AUTO_INCREMENT för tabell `items`
 --
-ALTER TABLE `items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 
 --
 -- AUTO_INCREMENT för tabell `sellers`
 --
-ALTER TABLE `sellers`
-  MODIFY `seller_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restriktioner för dumpade tabeller
@@ -114,9 +115,7 @@ ALTER TABLE `sellers`
 --
 -- Restriktioner för tabell `items`
 --
-ALTER TABLE `items`
-  ADD CONSTRAINT `items_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `sellers` (`seller_id`);
-COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
